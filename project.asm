@@ -8,7 +8,7 @@ ACALL DELAY ;GIVE DELAY OF ___ SECONDS	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ACALL READ_KEYPRESS ;
 ACALL DELAY
 ACALL CHECK_PASSWORD  
-Stay_here:SJMP Stay_here 
+SJMP MAIN 
 ;---------------------------------
 LCD_INIT:MOV DPTR,#MYCOM
 C1:CLR A
@@ -64,11 +64,12 @@ ACALL SEND_DAT ;display corret password
 ACALL DELAY
 SETB P2.3
 CLR P2.4
+ACALL DELAY
 SJMP GOBACK
 FAIL:ACALL LCD_INIT
 MOV DPTR,#TEXT_F1 
 ACALL SEND_DAT ;display incorrect text
-ACALL DELAY
+ACALL DELAY2
 CLR P2.3 
 CLR P2.4 ; send 0 to the Driver motor
 ACALL MAIN ;go to main funtion
