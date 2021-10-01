@@ -2,20 +2,19 @@ ORG 0000H
 ;--------------------------------
 MAIN:
 ACALL LCD_INIT ; initialize LCD
-MOV DPTR,#INITIAL_MSG ;DPTR point to initial text
-ACALL SEND_DAT ;DISPLAY DPTR content on LCD
-ACALL DELAY ;GIVE DELAY 
-ACALL LINE2 ;MOVE TO LINE 2
-ACALL READ_KEYPRESS ;take input from keypad
-ACALL DELAY ;give some delay
-ACALL CLRSCR ; clear our screen
+MOV DPTR,#INITIAL_MSG ;DPTR point to 'PASSWORD' text
+ACALL SEND_DAT ;DISPLAY inital TEXT
+ACALL DELAY ;GIVE DELAY OF ___ SECONDS	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ACALL LINE2
+ACALL READ_KEYPRESS ;
+ACALL DELAY
+ACALL CLRSCR
 MOV DPTR, #CHECK_CODE_MSG
 ACALL SEND_DAT
-ACALL DELAY2
-ACALL CHECK_PASSWORD  ;CHECK for correct password
+ACALL CHECK_PASSWORD  
 SJMP MAIN 
 ;---------------------------------
-LCD_INIT:MOV DPTR,#MYDATA
+LCD_INIT:MOV DPTR,#MYCOM
 C1:CLR A
 MOVC A,@A+DPTR
 JZ DAT
@@ -39,7 +38,7 @@ AGAIN: RET
 READ_KEYPRESS:
 MOV R0,#5D  ; R0 = 5
 MOV R1,#160D ; R1= 160
-ROTATE:ACALL KEY_SCAN   ;take the input key
+ROTATE:ACALL KEY_SCAN
 MOV @R1,A ;take the key pressed value and store at address of R1 i.e. 160
 ACALL DATAWRT ; display the key on LCD
 ACALL DELAY2 ; delay
@@ -58,11 +57,8 @@ JNZ FAIL ; jump to FAIL where we decide what will happen
 INC R1
 INC DPTR
 DJNZ R0,RPT ;repeat this process for 5 times
-ACALL SUCCESS
-RET
 
-
-SUCCESS:ACALL CLRSCR
+ACALL CLRSCR
 ACALL DELAY2
 MOV DPTR,#TEXT_S1
 ACALL SEND_DAT ;display corret password
@@ -72,21 +68,17 @@ MOV DPTR,#TEXT_S2
 ACALL SEND_DAT ;display corret password
 ACALL DELAY2
 SETB P2.3
-CLR P2.4 ;ROTATE MOTOR CLOCK WISE TO OPEN DOOR
-ACALL DELAY3 ; GIVE 10 SECOND DELAY
+CLR P2.4
+ACALL DELAY3
+
 ACALL CLRSCR
 MOV DPTR, #TEXT_S3
 ACALL SEND_DAT
 ACALL DELAY2
 CLR P2.3
-SETB P2.4;ROTATE MOTOR ACW TO CLOSE DOOR
-ACALL DELAY3; GIVE 10 SECOND DELAY
-CLR P2.4
-RET
-
-
-
-
+SETB P2.4
+ACALL DELAY2
+SJMP GOBACK
 FAIL:ACALL CLRSCR 
 MOV DPTR,#TEXT_F1 
 ACALL SEND_DAT ;display incorrect text
@@ -95,7 +87,11 @@ ACALL LINE2
 MOV DPTR, #TEXT_F2
 ACALL SEND_DAT ;display incorrect text
 ACALL DELAY2
+CLR P2.3 
+CLR P2.4 ; send 0 to the Driver motor
+ACALL BUZZER
 ACALL MAIN ;go to main funtion
+GOBACK:RET
 
 ;--------------------------------------------------
 ;algorithm to check for key scan
@@ -119,7 +115,7 @@ MOV A,#47D  ; A=/ DIVIDE
 RET
 
 NEXT4:SETB P1.0 ; ROW 1 IS RESET
-CLR P1.1 ;CHECK FOR ROW 2
+CLR P1.1 ;CHEKC FOR ROW 2
 JB P1.4, NEXT5 ; ROW 2 COLUMN 1
 MOV A,#52D ; A = 4
 RET
@@ -175,6 +171,14 @@ NEXT16:LJMP KEY_SCAN ; again check for keys
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!CHECK FOR SJMP OPTION
 ;-----------------------------------------------
 
+BUZZER:MOV R6,#10
+ARPIT:CLR P2.5
+ACALL DELAY2
+SETB P2.5
+ACALL DELAY2
+DJNZ R6, ARPIT
+RET
+
 COMNWRT:MOV P3,A
 CLR P2.0
 CLR P2.1
@@ -196,7 +200,7 @@ ACALL COMNWRT
 RET
 
 ;---------------------------------
-DELAY: MOV R3,#65
+DELAY: MOV R3,#55
 HERE2: MOV R4,#255
 HERE: DJNZ R4,HERE
 DJNZ R3,HERE2
@@ -230,12 +234,9 @@ ACALL COMNWRT
 RET
 
 ORG 500H
-MYDATA: DB 38H,0EH,01,06,80H,0; 
-;initializer 5 X 7 MATRIX lcd
-;display on cursor blinking
-;clear the display screen
-;cursor shift --> towards right
-;start from the first line
+MYCOM: DB 38H,0EH,01,06,80H,0;  ;REPLACE 80 IF NEEDED
+;initialize, display on curson blinking, clear display screen,
+;shift cursor to right, move to line 1, 
 INITIAL_MSG:   DB "ENTER 5-DIG.CODE",0
 CHECK_CODE_MSG:  DB "CHECKING CODE...",0	
 PASSWORD:DB 49D,50D,51D,52D,53D,0  ;PASSWORD = 1 2 3 4 5
