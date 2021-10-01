@@ -1,5 +1,6 @@
 ORG 0000H
 ;--------------------------------
+MOV R5,#3D
 MAIN:
 ACALL LCD_INIT ; initialize LCD
 MOV DPTR,#INITIAL_MSG ;DPTR point to initial text
@@ -43,6 +44,7 @@ ROTATE:ACALL KEY_SCAN   ;take the input key
 MOV @R1,A ;take the key pressed value and store at address of R1 i.e. 160
 ACALL DATAWRT ; display the key on LCD
 ACALL DELAY2 ; delay
+ACALL DELAY2 ;!!!!!!!!!! TWO DELAYS NEED TO MODIFY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 INC R1
 DJNZ R0,ROTATE ;repeat this process for 5 time
 RET
@@ -82,6 +84,7 @@ CLR P2.3
 SETB P2.4;ROTATE MOTOR ACW TO CLOSE DOOR
 ACALL DELAY3; GIVE 10 SECOND DELAY
 CLR P2.4
+MOV R5,#3D
 RET
 
 
@@ -95,8 +98,19 @@ ACALL LINE2
 MOV DPTR, #TEXT_F2
 ACALL SEND_DAT ;display incorrect text
 ACALL DELAY2
-ACALL MAIN ;go to main funtion
+MOV A,R5
+DJNZ R5,LOOP
+ACALL ALERT
+LOOP:LJMP MAIN ;go to main funtion
 
+ALERT:MOV R2,#5H
+BUZZ:CLR P2.6
+ACALL DELAY2
+SETB P2.6
+ACALL DELAY2
+DJNZ R2, BUZZ
+MOV R5,#3D
+RET
 ;--------------------------------------------------
 ;algorithm to check for key scan
 KEY_SCAN:MOV P1,#11111111B  ;TAKE INPUT FROM PORT 1
