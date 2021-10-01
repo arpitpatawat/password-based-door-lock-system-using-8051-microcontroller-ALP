@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 00:41:54 PAGE     1
+A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 01:01:47 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.5.0
@@ -22,21 +22,21 @@ LOC  OBJ            LINE     SOURCE
 
 0007 112D              7     ACALL SEND_DAT ;DISPLAY DPTR content on LCD
 
-0009 3147              8     ACALL DELAY ;GIVE DELAY 
+0009 3150              8     ACALL DELAY ;GIVE DELAY 
 
-000B 3142              9     ACALL LINE2 ;MOVE TO LINE 2
+000B 314B              9     ACALL LINE2 ;MOVE TO LINE 2
 
 000D 1139             10     ACALL READ_KEYPRESS ;take input from keypad
 
-000F 3147             11     ACALL DELAY ;give some delay
+000F 3150             11     ACALL DELAY ;give some delay
 
-0011 317D             12     ACALL CLRSCR ; clear our screen
+0011 3186             12     ACALL CLRSCR ; clear our screen
 
 0013 900517           13     MOV DPTR, #CHECK_CODE_MSG
 
 0016 112D             14     ACALL SEND_DAT
 
-0018 3150             15     ACALL DELAY2
+0018 3159             15     ACALL DELAY2
 
 001A 114A             16     ACALL CHECK_PASSWORD  ;CHECK for correct password
 
@@ -52,9 +52,9 @@ LOC  OBJ            LINE     SOURCE
 
 0023 6007             22     JZ DAT
 
-0025 3128             23     ACALL COMNWRT
+0025 3131             23     ACALL COMNWRT
 
-0027 3147             24     ACALL  DELAY
+0027 3150             24     ACALL  DELAY
 
 0029 A3               25     INC DPTR
 
@@ -72,9 +72,9 @@ LOC  OBJ            LINE     SOURCE
 
 002F 6007             32     JZ AGAIN
 
-0031 3135             33     ACALL DATAWRT
+0031 313E             33     ACALL DATAWRT
 
-0033 3147             34     ACALL DELAY
+0033 3150             34     ACALL DELAY
 
 0035 A3               35     INC DPTR
 
@@ -92,15 +92,15 @@ LOC  OBJ            LINE     SOURCE
 
 003B 79A0             42     MOV R1,#160D ; R1= 160
 
-003D 11B4             43     ROTATE:ACALL KEY_SCAN   ;take the input key
+003D 11BD             43     ROTATE:ACALL KEY_SCAN   ;take the input key
 
 003F F7               44     MOV @R1,A ;take the key pressed value and store at address of R1 i.e. 160
 
-0040 3135             45     ACALL DATAWRT ; display the key on LCD
+0040 313E             45     ACALL DATAWRT ; display the key on LCD
 
-0042 3150             46     ACALL DELAY2 ; delay
+0042 3159             46     ACALL DELAY2 ; delay
 
-0044 3150             47     ACALL DELAY2 ;!!!!!!!!!! TWO DELAYS NEED TO MODIFY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+0044 3159             47     ACALL DELAY2 ;!!!!!!!!!! TWO DELAYS NEED TO MODIFY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                              !!!!!!
 
 0046 09               48     INC R1
@@ -121,7 +121,7 @@ LOC  OBJ            LINE     SOURCE
 
 0052 93               56     MOVC A,@A+DPTR ; A = FIRST NUMBER OF THE ACTUAL PASSWORD
 
-A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 00:41:54 PAGE     2
+A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 01:01:47 PAGE     2
 
 0053 67               57     XRL A,@R1 ; XOR with the actual password
 
@@ -143,43 +143,43 @@ LOC  OBJ            LINE     SOURCE
 
                       66     
 
-005D 317D             67     SUCCESS:ACALL CLRSCR
+005D 3186             67     SUCCESS:ACALL CLRSCR
 
-005F 3150             68     ACALL DELAY2
+005F 3159             68     ACALL DELAY2
 
 0061 900547           69     MOV DPTR,#TEXT_S1
 
 0064 112D             70     ACALL SEND_DAT ;display corret password
 
-0066 3150             71     ACALL DELAY2
+0066 3159             71     ACALL DELAY2
 
-0068 3142             72     ACALL LINE2
+0068 314B             72     ACALL LINE2
 
 006A 900556           73     MOV DPTR,#TEXT_S2
 
 006D 112D             74     ACALL SEND_DAT ;display corret password
 
-006F 3150             75     ACALL DELAY2
+006F 3159             75     ACALL DELAY2
 
 0071 D2A3             76     SETB P2.3
 
 0073 C2A4             77     CLR P2.4 ;ROTATE MOTOR CLOCK WISE TO OPEN DOOR
 
-0075 3167             78     ACALL DELAY3 ; GIVE 10 SECOND DELAY
+0075 3170             78     ACALL DELAY3 ; GIVE 10 SECOND DELAY
 
-0077 317D             79     ACALL CLRSCR
+0077 3186             79     ACALL CLRSCR
 
 0079 900563           80     MOV DPTR, #TEXT_S3
 
 007C 112D             81     ACALL SEND_DAT
 
-007E 3150             82     ACALL DELAY2
+007E 3159             82     ACALL DELAY2
 
 0080 C2A3             83     CLR P2.3
 
 0082 D2A4             84     SETB P2.4;ROTATE MOTOR ACW TO CLOSE DOOR
 
-0084 3167             85     ACALL DELAY3; GIVE 10 SECOND DELAY
+0084 3170             85     ACALL DELAY3; GIVE 10 SECOND DELAY
 
 0086 C2A4             86     CLR P2.4
 
@@ -195,21 +195,21 @@ LOC  OBJ            LINE     SOURCE
 
                       92     
 
-008B 317D             93     FAIL:ACALL CLRSCR 
+008B 3186             93     FAIL:ACALL CLRSCR 
 
 008D 90052E           94     MOV DPTR,#TEXT_F1 
 
 0090 112D             95     ACALL SEND_DAT ;display incorrect text
 
-0092 3150             96     ACALL DELAY2
+0092 3159             96     ACALL DELAY2
 
-0094 3142             97     ACALL LINE2
+0094 314B             97     ACALL LINE2
 
 0096 900539           98     MOV DPTR, #TEXT_F2
 
 0099 112D             99     ACALL SEND_DAT ;display incorrect text
 
-009B 3150            100     ACALL DELAY2
+009B 3159            100     ACALL DELAY2
 
 009D ED              101     MOV A,R5
 
@@ -223,347 +223,360 @@ LOC  OBJ            LINE     SOURCE
 
 00A5 7A05            106     ALERT:MOV R2,#5H
 
-00A7 C2A6            107     BUZZ:CLR P2.6
+00A7 3186            107     ACALL CLRSCR
 
-00A9 3150            108     ACALL DELAY2
+00A9 900570          108     MOV DPTR, #ALERT_TEXT
 
-00AB D2A6            109     SETB P2.6
+00AC 112D            109     ACALL SEND_DAT
 
-00AD 3150            110     ACALL DELAY2
+00AE 3159            110     ACALL DELAY2
 
-00AF DAF6            111     DJNZ R2, BUZZ
+00B0 C2A6            111     BUZZ:CLR P2.6
 
-00B1 7D03            112     MOV R5,#3D
+00B2 3159            112     ACALL DELAY2
 
-00B3 22              113     RET
+00B4 D2A6            113     SETB P2.6
 
-                     114     ;--------------------------------------------------
+00B6 3159            114     ACALL DELAY2
 
-                     115     ;algorithm to check for key scan
+00B8 DAF6            115     DJNZ R2, BUZZ
 
-00B4 7590FF          116     KEY_SCAN:MOV P1,#11111111B  ;TAKE INPUT FROM PORT 1
+00BA 7D03            116     MOV R5,#3D
 
-                     117     ;CHECKING FOR ROW 1 COLUMN 1
+00BC 22              117     RET
 
-00B7 C290            118     CLR P1.0  ;first row checking #11111110
+                     118     ;--------------------------------------------------
 
-00B9 209403          119     JB P1.4, NEXT1 ;when 1 column is 1 then no button is pressed , check for next column
+                     119     ;algorithm to check for key scan
 
-00BC 7437            120     MOV A,#55D ; if above fails then 7 is pressed , A =7
+00BD 7590FF          120     KEY_SCAN:MOV P1,#11111111B  ;TAKE INPUT FROM PORT 1
 
-00BE 22              121     RET 
+                     121     ;CHECKING FOR ROW 1 COLUMN 1
 
-                     122     
+00C0 C290            122     CLR P1.0  ;first row checking #11111110
 
-A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 00:41:54 PAGE     3
+A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 01:01:47 PAGE     3
 
-00BF 209503          123     NEXT1:JB P1.5,NEXT2 ; ROW 1 COULMN 2
+00C2 209403          123     JB P1.4, NEXT1 ;when 1 column is 1 then no button is pressed , check for next column
 
-00C2 7438            124     MOV A,#56D ; A = 8
+00C5 7437            124     MOV A,#55D ; if above fails then 7 is pressed , A =7
 
-00C4 22              125     RET
+00C7 22              125     RET 
 
                      126     
 
-00C5 209603          127     NEXT2: JB P1.6,NEXT3 ; ROW 1 COLUMN 3
+00C8 209503          127     NEXT1:JB P1.5,NEXT2 ; ROW 1 COULMN 2
 
-00C8 7439            128     MOV A,#57D ; A=9                  
+00CB 7438            128     MOV A,#56D ; A = 8
 
-00CA 22              129     RET
+00CD 22              129     RET
 
                      130     
 
-00CB 209703          131     NEXT3: JB P1.7,NEXT4 ; ROW 1 COLUMN 4
+00CE 209603          131     NEXT2: JB P1.6,NEXT3 ; ROW 1 COLUMN 3
 
-00CE 742F            132     MOV A,#47D  ; A=/ DIVIDE
+00D1 7439            132     MOV A,#57D ; A=9                  
 
-00D0 22              133     RET
+00D3 22              133     RET
 
                      134     
 
-00D1 D290            135     NEXT4:SETB P1.0 ; ROW 1 IS RESET
+00D4 209703          135     NEXT3: JB P1.7,NEXT4 ; ROW 1 COLUMN 4
 
-00D3 C291            136     CLR P1.1 ;CHECK FOR ROW 2
+00D7 742F            136     MOV A,#47D  ; A=/ DIVIDE
 
-00D5 209403          137     JB P1.4, NEXT5 ; ROW 2 COLUMN 1
+00D9 22              137     RET
 
-00D8 7434            138     MOV A,#52D ; A = 4
+                     138     
 
-00DA 22              139     RET
+00DA D290            139     NEXT4:SETB P1.0 ; ROW 1 IS RESET
 
-                     140     
+00DC C291            140     CLR P1.1 ;CHECK FOR ROW 2
 
-00DB 209503          141     NEXT5:JB P1.5,NEXT6 ; ROW 2 COLUMN 2
+00DE 209403          141     JB P1.4, NEXT5 ; ROW 2 COLUMN 1
 
-00DE 7435            142     MOV A,#53D      ;A = 5
+00E1 7434            142     MOV A,#52D ; A = 4
 
-00E0 22              143     RET
+00E3 22              143     RET
 
                      144     
 
-00E1 209603          145     NEXT6: JB P1.6,NEXT7 ; ROW 2 COLUMN 3
+00E4 209503          145     NEXT5:JB P1.5,NEXT6 ; ROW 2 COLUMN 2
 
-00E4 7436            146     MOV A,#54D ;A = 6
+00E7 7435            146     MOV A,#53D      ;A = 5
 
-00E6 22              147     RET
+00E9 22              147     RET
 
                      148     
 
-00E7 209703          149     NEXT7: JB P1.7,NEXT8 ; ROW 2 COLUMN 4
+00EA 209603          149     NEXT6: JB P1.6,NEXT7 ; ROW 2 COLUMN 3
 
-00EA 742A            150     MOV A,#42D ; A = * 
+00ED 7436            150     MOV A,#54D ;A = 6
 
-00EC 22              151     RET
+00EF 22              151     RET
 
                      152     
 
-00ED D291            153     NEXT8:SETB P1.1 ;ROW IS RESET
+00F0 209703          153     NEXT7: JB P1.7,NEXT8 ; ROW 2 COLUMN 4
 
-00EF C292            154     CLR P1.2 ; CHECK FOR ROW 3
+00F3 742A            154     MOV A,#42D ; A = * 
 
-00F1 209403          155     JB P1.4, NEXT9 ; ROW 3 COLUMN 1
+00F5 22              155     RET
 
-00F4 7431            156     MOV A,#49D  ;A = 1
+                     156     
 
-00F6 22              157     RET
+00F6 D291            157     NEXT8:SETB P1.1 ;ROW IS RESET
 
-                     158     
+00F8 C292            158     CLR P1.2 ; CHECK FOR ROW 3
 
-00F7 209503          159     NEXT9:JB P1.5,NEXT10 ; ROW 3 COLUMN 2
+00FA 209403          159     JB P1.4, NEXT9 ; ROW 3 COLUMN 1
 
-00FA 7432            160     MOV A,#50D ;A =2 
+00FD 7431            160     MOV A,#49D  ;A = 1
 
-00FC 22              161     RET
+00FF 22              161     RET
 
                      162     
 
-00FD 209603          163     NEXT10: JB P1.6,NEXT11 ; ROW 3 COLUMN 3
+0100 209503          163     NEXT9:JB P1.5,NEXT10 ; ROW 3 COLUMN 2
 
-0100 7433            164     MOV A,#51D ;A = 3
+0103 7432            164     MOV A,#50D ;A =2 
 
-0102 22              165     RET
+0105 22              165     RET
 
                      166     
 
-0103 209703          167     NEXT11: JB P1.7,NEXT12 ; ROW 3 COLUMN 4
+0106 209603          167     NEXT10: JB P1.6,NEXT11 ; ROW 3 COLUMN 3
 
-0106 742D            168     MOV A,#45D ;A = -
+0109 7433            168     MOV A,#51D ;A = 3
 
-0108 22              169     RET
+010B 22              169     RET
 
                      170     
 
-0109 D292            171     NEXT12:SETB P1.2 ; ROW 3 IS RESET
+010C 209703          171     NEXT11: JB P1.7,NEXT12 ; ROW 3 COLUMN 4
 
-010B C293            172     CLR P1.3 ; CHECK FOR ROW 4
+010F 742D            172     MOV A,#45D ;A = -
 
-010D 209403          173     JB P1.4, NEXT13 ; ROW 4 COLUMN 1
+0111 22              173     RET
 
-0110 7443            174     MOV A,#67D ; A = C
+                     174     
 
-0112 22              175     RET
+0112 D292            175     NEXT12:SETB P1.2 ; ROW 3 IS RESET
 
-                     176     
+0114 C293            176     CLR P1.3 ; CHECK FOR ROW 4
 
-0113 209503          177     NEXT13:JB P1.5,NEXT14; ROW 4 COLUMN 2
+0116 209403          177     JB P1.4, NEXT13 ; ROW 4 COLUMN 1
 
-0116 7430            178     MOV A,#48D ; A = 0
+0119 7443            178     MOV A,#67D ; A = C
 
-0118 22              179     RET
+011B 22              179     RET
 
                      180     
 
-0119 209603          181     NEXT14: JB P1.6,NEXT15 ; ROW 4 COLUMN 3
+011C 209503          181     NEXT13:JB P1.5,NEXT14; ROW 4 COLUMN 2
 
-011C 743D            182     MOV A,#61D       ; A = '='
+011F 7430            182     MOV A,#48D ; A = 0
 
-011E 22              183     RET
+0121 22              183     RET
 
                      184     
 
-011F 209703          185     NEXT15: JB P1.7,NEXT16; ROW 4 COLUMN 4
+0122 209603          185     NEXT14: JB P1.6,NEXT15 ; ROW 4 COLUMN 3
 
-0122 742B            186     MOV A,#43D ; A = +
+0125 743D            186     MOV A,#61D       ; A = '='
 
-0124 22              187     RET
+0127 22              187     RET
 
-0125 0200B4          188     NEXT16:LJMP KEY_SCAN ; again check for keys
+                     188     
 
-A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 00:41:54 PAGE     4
+A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 01:01:47 PAGE     4
 
-                     189     ;!!!!!!!!!!!!!!!!!!!!!!!!!!CHECK FOR SJMP OPTION
+0128 209703          189     NEXT15: JB P1.7,NEXT16; ROW 4 COLUMN 4
 
-                     190     ;-----------------------------------------------
+012B 742B            190     MOV A,#43D ; A = +
 
-                     191     
+012D 22              191     RET
 
-0128 F5B0            192     COMNWRT:MOV P3,A
+012E 0200BD          192     NEXT16:LJMP KEY_SCAN ; again check for keys
 
-012A C2A0            193     CLR P2.0
+                     193     ;!!!!!!!!!!!!!!!!!!!!!!!!!!CHECK FOR SJMP OPTION
 
-012C C2A1            194     CLR P2.1
+                     194     ;-----------------------------------------------
 
-012E D2A2            195     SETB P2.2
+                     195     
 
-0130 3147            196     ACALL DELAY
+0131 F5B0            196     COMNWRT:MOV P3,A
 
-0132 C2A2            197     CLR P2.2
+0133 C2A0            197     CLR P2.0
 
-0134 22              198     RET
+0135 C2A1            198     CLR P2.1
 
-                     199     
+0137 D2A2            199     SETB P2.2
 
-0135 F5B0            200     DATAWRT: MOV P3,A
+0139 3150            200     ACALL DELAY
 
-0137 D2A0            201     SETB P2.0
+013B C2A2            201     CLR P2.2
 
-0139 C2A1            202     CLR P2.1
+013D 22              202     RET
 
-013B D2A2            203     SETB P2.2
+                     203     
 
-013D 3147            204     ACALL DELAY
+013E F5B0            204     DATAWRT: MOV P3,A
 
-013F C2A2            205     CLR P2.2
+0140 D2A0            205     SETB P2.0
 
-0141 22              206     RET
+0142 C2A1            206     CLR P2.1
 
-                     207     
+0144 D2A2            207     SETB P2.2
 
-0142 74C0            208     LINE2: MOV A,#0C0H
+0146 3150            208     ACALL DELAY
 
-0144 3128            209     ACALL COMNWRT
+0148 C2A2            209     CLR P2.2
 
-0146 22              210     RET
+014A 22              210     RET
 
                      211     
 
-                     212     ;---------------------------------
+014B 74C0            212     LINE2: MOV A,#0C0H
 
-0147 7B41            213     DELAY: MOV R3,#65
+014D 3131            213     ACALL COMNWRT
 
-0149 7CFF            214     HERE2: MOV R4,#255
+014F 22              214     RET
 
-014B DCFE            215     HERE: DJNZ R4,HERE
+                     215     
 
-014D DBFA            216     DJNZ R3,HERE2
+                     216     ;---------------------------------
 
-014F 22              217     RET
+0150 7B41            217     DELAY: MOV R3,#65
 
-                     218     
+0152 7CFF            218     HERE2: MOV R4,#255
 
-0150 7BFA            219     DELAY2: MOV R3,#250D
+0154 DCFE            219     HERE: DJNZ R4,HERE
 
-0152 758901          220              MOV TMOD,#01
+0156 DBFA            220     DJNZ R3,HERE2
 
-0155 758CFC          221     BACK2:   MOV TH0,#0FCH 
+0158 22              221     RET
 
-0158 758A18          222             MOV TL0,#018H 
+                     222     
 
-015B D28C            223             SETB TR0 
+0159 7BFA            223     DELAY2: MOV R3,#250D
 
-015D 308DFD          224     HERE5:  JNB TF0,HERE5
+015B 758901          224              MOV TMOD,#01
 
-0160 C28C            225             CLR TR0 
+015E 758CFC          225     BACK2:   MOV TH0,#0FCH 
 
-0162 C28D            226             CLR TF0 
+0161 758A18          226             MOV TL0,#018H 
 
-0164 DBEF            227             DJNZ R3,BACK2
+0164 D28C            227             SETB TR0 
 
-0166 22              228             RET   
+0166 308DFD          228     HERE5:  JNB TF0,HERE5
 
-                     229     
+0169 C28C            229             CLR TR0 
 
-0167 758910          230     DELAY3:MOV TMOD,#10H ;Timer 1, mod 1
+016B C28D            230             CLR TF0 
 
-016A 7B78            231     MOV R3,#120 ;cnter for multiple delay
+016D DBEF            231             DJNZ R3,BACK2
 
-016C 758B08          232     AGAIN1: MOV TL1,#08H ;TL1=08,low byte of timer
+016F 22              232             RET   
 
-016F 758D01          233     MOV TH1,#01H ;TH1=01,high byte
+                     233     
 
-0172 D28E            234     SETB TR1 ;Start timer 1
+0170 758910          234     DELAY3:MOV TMOD,#10H ;Timer 1, mod 1
 
-0174 308FFD          235     BACK: JNB TF1,BACK ;until timer rolls over
+0173 7B78            235     MOV R3,#120 ;cnter for multiple delay
 
-0177 C28E            236     CLR TR1 ;Stop the timer 1
+0175 758B08          236     AGAIN1: MOV TL1,#08H ;TL1=08,low byte of timer
 
-0179 C28F            237     CLR TF1 ;clear Timer 1 flag
+0178 758D01          237     MOV TH1,#01H ;TH1=01,high byte
 
-017B DBEF            238     DJNZ R3,AGAIN1 ;if R3 not zero then 
+017B D28E            238     SETB TR1 ;Start timer 1
 
-                     239     ;reload time
+017D 308FFD          239     BACK: JNB TF1,BACK ;until timer rolls over
 
-                     240     
+0180 C28E            240     CLR TR1 ;Stop the timer 1
 
-                     241     
+0182 C28F            241     CLR TF1 ;clear Timer 1 flag
 
-017D 7401            242     CLRSCR: MOV A,#01H
+0184 DBEF            242     DJNZ R3,AGAIN1 ;if R3 not zero then 
 
-017F 3128            243     ACALL COMNWRT
+                     243     ;reload time
 
-0181 22              244     RET
+                     244     
 
                      245     
 
-0500                 246     ORG 500H
+0186 7401            246     CLRSCR: MOV A,#01H
 
-0500 380E0106        247     MYDATA: DB 38H,0EH,01,06,80H,0; 
+0188 3131            247     ACALL COMNWRT
+
+018A 22              248     RET
+
+                     249     
+
+0500                 250     ORG 500H
+
+0500 380E0106        251     MYDATA: DB 38H,0EH,01,06,80H,0; 
 
 0504 8000                    
-                     248     ;initializer 5 X 7 MATRIX lcd
+                     252     ;initializer 5 X 7 MATRIX lcd
 
-                     249     ;display on cursor blinking
+                     253     ;display on cursor blinking
 
-                     250     ;clear the display screen
+A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 01:01:47 PAGE     5
 
-                     251     ;cursor shift --> towards right
+                     254     ;clear the display screen
 
-                     252     ;start from the first line
+                     255     ;cursor shift --> towards right
 
-0506 454E5445        253     INITIAL_MSG:   DB "ENTER 5-DIG.CODE",0
+                     256     ;start from the first line
 
-A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 00:41:54 PAGE     5
+0506 454E5445        257     INITIAL_MSG:   DB "ENTER 5-DIG.CODE",0
 
 050A 5220352D                
 050E 4449472E                
 0512 434F4445                
 0516 00                      
-0517 43484543        254     CHECK_CODE_MSG:  DB "CHECKING CODE...",0        
+0517 43484543        258     CHECK_CODE_MSG:  DB "CHECKING CODE...",0        
 
 051B 4B494E47                
 051F 20434F44                
 0523 452E2E2E                
 0527 00                      
-0528 31323334        255     PASSWORD:DB 49D,50D,51D,52D,53D,0  ;PASSWORD = 1 2 3 4 5
+0528 31323334        259     PASSWORD:DB 49D,50D,51D,52D,53D,0  ;PASSWORD = 1 2 3 4 5
 
 052C 3500                    
-052E 57524F4E        256     TEXT_F1: DB "WRONG CODE",0
+052E 57524F4E        260     TEXT_F1: DB "WRONG CODE",0
 
 0532 4720434F                
 0536 444500                  
-0539 41434345        257     TEXT_F2: DB "ACCESS DENIED",0
+0539 41434345        261     TEXT_F2: DB "ACCESS DENIED",0
 
 053D 53532044                
 0541 454E4945                
 0545 4400                    
-0547 41434345        258     TEXT_S1: DB "ACCESS GRANTED",0
+0547 41434345        262     TEXT_S1: DB "ACCESS GRANTED",0
 
 054B 53532047                
 054F 52414E54                
 0553 454400                  
-0556 4F50454E        259     TEXT_S2: DB "OPENING DOOR",0
+0556 4F50454E        263     TEXT_S2: DB "OPENING DOOR",0
 
 055A 494E4720                
 055E 444F4F52                
 0562 00                      
-0563 434C4F53        260     TEXT_S3: DB "CLOSING DOOR", 0
+0563 434C4F53        264     TEXT_S3: DB "CLOSING DOOR", 0
 
 0567 494E4720                
 056B 444F4F52                
 056F 00                      
-                     261     END
+0570 494E5452        265     ALERT_TEXT: DB "INTRUDER ALERT !"
 
-A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 00:41:54 PAGE     6
+0574 55444552                
+0578 20414C45                
+057C 52542021                
+                     266     END
+
+A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 01:01:47 PAGE     6
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -572,48 +585,49 @@ SYMBOL TABLE LISTING
 N A M E             T Y P E  V A L U E   ATTRIBUTES
 
 AGAIN. . . . . . .  C ADDR   0038H   A   
-AGAIN1 . . . . . .  C ADDR   016CH   A   
+AGAIN1 . . . . . .  C ADDR   0175H   A   
 ALERT. . . . . . .  C ADDR   00A5H   A   
-BACK . . . . . . .  C ADDR   0174H   A   
-BACK2. . . . . . .  C ADDR   0155H   A   
-BUZZ . . . . . . .  C ADDR   00A7H   A   
+ALERT_TEXT . . . .  C ADDR   0570H   A   
+BACK . . . . . . .  C ADDR   017DH   A   
+BACK2. . . . . . .  C ADDR   015EH   A   
+BUZZ . . . . . . .  C ADDR   00B0H   A   
 C1 . . . . . . . .  C ADDR   0021H   A   
 CHECK_CODE_MSG . .  C ADDR   0517H   A   
 CHECK_PASSWORD . .  C ADDR   004AH   A   
-CLRSCR . . . . . .  C ADDR   017DH   A   
-COMNWRT. . . . . .  C ADDR   0128H   A   
+CLRSCR . . . . . .  C ADDR   0186H   A   
+COMNWRT. . . . . .  C ADDR   0131H   A   
 DAT. . . . . . . .  C ADDR   002CH   A   
-DATAWRT. . . . . .  C ADDR   0135H   A   
-DELAY. . . . . . .  C ADDR   0147H   A   
-DELAY2 . . . . . .  C ADDR   0150H   A   
-DELAY3 . . . . . .  C ADDR   0167H   A   
+DATAWRT. . . . . .  C ADDR   013EH   A   
+DELAY. . . . . . .  C ADDR   0150H   A   
+DELAY2 . . . . . .  C ADDR   0159H   A   
+DELAY3 . . . . . .  C ADDR   0170H   A   
 FAIL . . . . . . .  C ADDR   008BH   A   
-HERE . . . . . . .  C ADDR   014BH   A   
-HERE2. . . . . . .  C ADDR   0149H   A   
-HERE5. . . . . . .  C ADDR   015DH   A   
+HERE . . . . . . .  C ADDR   0154H   A   
+HERE2. . . . . . .  C ADDR   0152H   A   
+HERE5. . . . . . .  C ADDR   0166H   A   
 INITIAL_MSG. . . .  C ADDR   0506H   A   
-KEY_SCAN . . . . .  C ADDR   00B4H   A   
+KEY_SCAN . . . . .  C ADDR   00BDH   A   
 LCD_INIT . . . . .  C ADDR   001EH   A   
-LINE2. . . . . . .  C ADDR   0142H   A   
+LINE2. . . . . . .  C ADDR   014BH   A   
 LOOP . . . . . . .  C ADDR   00A2H   A   
 MAIN . . . . . . .  C ADDR   0002H   A   
 MYDATA . . . . . .  C ADDR   0500H   A   
-NEXT1. . . . . . .  C ADDR   00BFH   A   
-NEXT10 . . . . . .  C ADDR   00FDH   A   
-NEXT11 . . . . . .  C ADDR   0103H   A   
-NEXT12 . . . . . .  C ADDR   0109H   A   
-NEXT13 . . . . . .  C ADDR   0113H   A   
-NEXT14 . . . . . .  C ADDR   0119H   A   
-NEXT15 . . . . . .  C ADDR   011FH   A   
-NEXT16 . . . . . .  C ADDR   0125H   A   
-NEXT2. . . . . . .  C ADDR   00C5H   A   
-NEXT3. . . . . . .  C ADDR   00CBH   A   
-NEXT4. . . . . . .  C ADDR   00D1H   A   
-NEXT5. . . . . . .  C ADDR   00DBH   A   
-NEXT6. . . . . . .  C ADDR   00E1H   A   
-NEXT7. . . . . . .  C ADDR   00E7H   A   
-NEXT8. . . . . . .  C ADDR   00EDH   A   
-NEXT9. . . . . . .  C ADDR   00F7H   A   
+NEXT1. . . . . . .  C ADDR   00C8H   A   
+NEXT10 . . . . . .  C ADDR   0106H   A   
+NEXT11 . . . . . .  C ADDR   010CH   A   
+NEXT12 . . . . . .  C ADDR   0112H   A   
+NEXT13 . . . . . .  C ADDR   011CH   A   
+NEXT14 . . . . . .  C ADDR   0122H   A   
+NEXT15 . . . . . .  C ADDR   0128H   A   
+NEXT16 . . . . . .  C ADDR   012EH   A   
+NEXT2. . . . . . .  C ADDR   00CEH   A   
+NEXT3. . . . . . .  C ADDR   00D4H   A   
+NEXT4. . . . . . .  C ADDR   00DAH   A   
+NEXT5. . . . . . .  C ADDR   00E4H   A   
+NEXT6. . . . . . .  C ADDR   00EAH   A   
+NEXT7. . . . . . .  C ADDR   00F0H   A   
+NEXT8. . . . . . .  C ADDR   00F6H   A   
+NEXT9. . . . . . .  C ADDR   0100H   A   
 P1 . . . . . . . .  D ADDR   0090H   A   
 P2 . . . . . . . .  D ADDR   00A0H   A   
 P3 . . . . . . . .  D ADDR   00B0H   A   
@@ -630,9 +644,9 @@ TEXT_S2. . . . . .  C ADDR   0556H   A
 TEXT_S3. . . . . .  C ADDR   0563H   A   
 TF0. . . . . . . .  B ADDR   0088H.5 A   
 TF1. . . . . . . .  B ADDR   0088H.7 A   
-TH0. . . . . . . .  D ADDR   008CH   A   
-A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 00:41:54 PAGE     7
+A51 MACRO ASSEMBLER  PROJECT                                                              10/02/2021 01:01:47 PAGE     7
 
+TH0. . . . . . . .  D ADDR   008CH   A   
 TH1. . . . . . . .  D ADDR   008DH   A   
 TL0. . . . . . . .  D ADDR   008AH   A   
 TL1. . . . . . . .  D ADDR   008BH   A   
