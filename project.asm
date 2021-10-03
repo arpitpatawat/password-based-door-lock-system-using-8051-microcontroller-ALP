@@ -1,6 +1,7 @@
 ORG 0000H
-;--------------------------------
+CLR P2.7 ; port 2.7 will be used for buzzer
 MOV R5,#3D ;number of attempts
+;--------------------------------
 MAIN:
 ACALL LCD_INIT ; initialize LCD
 MOV DPTR,#INITIAL_MSG ;DPTR point to initial text
@@ -35,7 +36,6 @@ ACALL DELAY
 INC DPTR
 SJMP SEND_DAT
 AGAIN: RET
-
 ;--------------------------------- 
 READ_KEYPRESS:
 MOV R0,#5D  ; R0 = 5
@@ -44,7 +44,7 @@ ROTATE:ACALL KEY_SCAN   ;take the input key
 MOV @R1,A ;take the key pressed value and store at address of R1 i.e. 160
 ACALL DATAWRT ; display the key on LCD
 ACALL DELAY2 ; delay
-ACALL DELAY2 ;!!!!!!!!!! TWO DELAYS NEED TO MODIFY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ACALL DELAY2 ;
 INC R1
 DJNZ R0,ROTATE ;repeat this process for 5 time
 RET
@@ -62,8 +62,7 @@ INC DPTR
 DJNZ R0,RPT ;repeat this process for 5 times
 ACALL SUCCESS
 RET
-
-
+;-----------------------------------
 SUCCESS:ACALL CLRSCR
 ACALL DELAY2
 MOV DPTR,#TEXT_S1
@@ -73,23 +72,20 @@ ACALL LINE2
 MOV DPTR,#TEXT_S2
 ACALL SEND_DAT ;display corret password
 ACALL DELAY2
-SETB P2.3
-CLR P2.4 ;ROTATE MOTOR CLOCK WISE TO OPEN DOOR
-ACALL DELAY3 ; GIVE 10 SECOND DELAY
+CLR P2.3
+CLR P2.4 
+;ROTATE MOTOR CLOCK WISE TO OPEN DOOR
+ACALL DELAY3 ; GIVE SECOND DELAY
 ACALL CLRSCR
 MOV DPTR, #TEXT_S3
 ACALL SEND_DAT
 ACALL DELAY2
-CLR P2.3
-SETB P2.4;ROTATE MOTOR ACW TO CLOSE DOOR
-ACALL DELAY3; GIVE 10 SECOND DELAY
-CLR P2.4
+ACALL DELAY3; GIVE SECOND DELAY
+SETB P2.3
+CLR P2.5
 MOV R5,#3H
 RET
-
-
-
-
+;----------------------------
 FAIL:ACALL CLRSCR 
 MOV DPTR,#TEXT_F1 
 ACALL SEND_DAT ;display incorrect text
@@ -103,7 +99,7 @@ DJNZ R5,LOOP
 ACALL ALERT
 LOOP: ACALL ATTEMPT
 LJMP MAIN ;go to main funtion
-
+;------------------------------
 ATTEMPT: ACALL CLRSCR
 MOV DPTR,#ATTEMPT_TEXT
 ACALL SEND_DAT
@@ -115,18 +111,17 @@ DA A
 ACALL DATAWRT
 ACALL DELAY
 ACALL DELAY2
-ACALL DELAY2 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ACALL DELAY2 ;
 RET
-
-
+;-------------------------------
 ALERT:MOV R2,#10D
 ACALL CLRSCR
 MOV DPTR, #ALERT_TEXT
 ACALL SEND_DAT
 ACALL DELAY2
-BUZZ:CLR P2.6
+BUZZ:SETB P2.7
 ACALL DELAY2
-SETB P2.6
+CLR P2.7
 ACALL DELAY2
 DJNZ R2, BUZZ
 MOV R5,#3D
@@ -224,7 +219,7 @@ SETB P2.2
 ACALL DELAY
 CLR P2.2
 RET
-
+;-------------------------------------------------
 LINE2: MOV A,#0C0H
 ACALL COMNWRT
 RET
@@ -248,7 +243,7 @@ HERE5:  JNB TF0,HERE5
         RET   
 
 DELAY3:MOV TMOD,#10H ;Timer 1, mod 1
-MOV R3,#120 ;cnter for multiple delay
+MOV R3,#60 ;cnter for multiple delay
 AGAIN1: MOV TL1,#08H ;TL1=08,low byte of timer
 MOV TH1,#01H ;TH1=01,high byte
 SETB TR1 ;Start timer 1
@@ -258,11 +253,11 @@ CLR TF1 ;clear Timer 1 flag
 DJNZ R3,AGAIN1 ;if R3 not zero then 
 ;reload time
 
-
+;-----------------------------------------
 CLRSCR: MOV A,#01H
 ACALL COMNWRT
 RET
-
+;----------------------------------------
 ORG 500H
 MYDATA: DB 38H,0EH,01,06,80H,0; 
 ;initializer 5 X 7 MATRIX lcd
