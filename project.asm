@@ -11,11 +11,11 @@ ACALL LINE2 ;MOVE TO LINE 2
 ACALL READ_KEYPRESS ;take input from keypad
 ACALL DELAY ;give some delay
 ACALL CLRSCR ; clear our screen
-MOV DPTR, #CHECK_CODE_MSG
+MOV DPTR, #CHECK_CODE_MSG ;send checking code.. msg to lcd
 ACALL SEND_DAT
 ACALL DELAY2
 ACALL CHECK_PASSWORD  ;CHECK for correct password
-SJMP MAIN 
+SJMP MAIN ;short jump to main
 ;---------------------------------
 LCD_INIT:MOV DPTR,#MYDATA
 C1:CLR A
@@ -66,29 +66,29 @@ RET
 SUCCESS:ACALL CLRSCR
 ACALL DELAY2
 MOV DPTR,#TEXT_S1
-ACALL SEND_DAT ;display corret password
+ACALL SEND_DAT ;display correct password
 ACALL DELAY2
 ACALL LINE2
 MOV DPTR,#TEXT_S2
-ACALL SEND_DAT ;display corret password
+ACALL SEND_DAT ;display opening door
 ACALL DELAY2
 CLR P2.3
 CLR P2.4 
-;ROTATE MOTOR CLOCK WISE TO OPEN DOOR
+;ROTATE MOTOR CLOCK WISE 90 degree TO OPEN DOOR
 ACALL DELAY3 ; GIVE SECOND DELAY
 ACALL CLRSCR
 MOV DPTR, #TEXT_S3
 ACALL SEND_DAT
 ACALL DELAY2
 ACALL DELAY3; GIVE SECOND DELAY
-SETB P2.3
+SETB P2.3 ;rotate motor antin clock wise
 CLR P2.5
 ACALL DELAY2
-SETB P2.3
+SETB P2.3 ;initial position 
 SETB P2.4
 SETB P2.5
 SETB P2.6
-MOV R5,#3H
+MOV R5,#3D ;reset attempts value
 RET
 ;----------------------------
 FAIL:ACALL CLRSCR 
@@ -97,22 +97,20 @@ ACALL SEND_DAT ;display incorrect text
 ACALL DELAY2
 ACALL LINE2
 MOV DPTR, #TEXT_F2
-ACALL SEND_DAT ;display incorrect text
+ACALL SEND_DAT ;display access denied text
 ACALL DELAY2
-;MOV A,R5
 DJNZ R5,LOOP
 ACALL ALERT
 LOOP: ACALL ATTEMPT
 LJMP MAIN ;go to main funtion
 ;------------------------------
 ATTEMPT: ACALL CLRSCR
-MOV DPTR,#ATTEMPT_TEXT
+MOV DPTR,#ATTEMPT_TEXT ;number of attempts left
 ACALL SEND_DAT
 ACALL DELAY2
-MOV A,#48D
+MOV A,#48D ; 48 = 0
 ADD A,R5
 DA A
-;MOV A ,R5
 ACALL DATAWRT
 ACALL DELAY
 ACALL DELAY2
@@ -121,10 +119,10 @@ RET
 ;-------------------------------
 ALERT:MOV R2,#10D
 ACALL CLRSCR
-MOV DPTR, #ALERT_TEXT
+MOV DPTR, #ALERT_TEXT ;display alert text
 ACALL SEND_DAT
 ACALL DELAY2
-BUZZ:SETB P2.7
+BUZZ:SETB P2.7 ;buzzer will turn on and off 10 times
 ACALL DELAY2
 CLR P2.7
 ACALL DELAY2
@@ -206,10 +204,9 @@ NEXT15: JB P1.7,NEXT16; ROW 4 COLUMN 4
 MOV A,#43D ; A = +
 RET
 NEXT16:LJMP KEY_SCAN ; again check for keys
-;!!!!!!!!!!!!!!!!!!!!!!!!!!CHECK FOR SJMP OPTION
 ;-----------------------------------------------
 
-COMNWRT:MOV P3,A
+COMNWRT:MOV P3,A  ;to send command
 CLR P2.0 ; R/s = 0
 CLR P2.1 ;R/w =0
 SETB P2.2 ;high
@@ -217,7 +214,7 @@ ACALL DELAY ; delay
 CLR P2.2 ;low
 RET
 
-DATAWRT: MOV P3,A
+DATAWRT: MOV P3,A  ;to send data
 SETB P2.0
 CLR P2.1
 SETB P2.2
@@ -225,38 +222,52 @@ ACALL DELAY
 CLR P2.2
 RET
 ;-------------------------------------------------
-LINE2: MOV A,#0C0H
+LINE2: MOV A,#0C0H ;move to line 2 of LCD
 ACALL COMNWRT
 RET
 
 ;---------------------------------
-DELAY: MOV R3,#65
-HERE2: MOV R4,#255
-HERE: DJNZ R4,HERE
-DJNZ R3,HERE2
-RET
-
-DELAY2:	MOV R3,#250D
-         MOV TMOD,#01
-BACK2:   MOV TH0,#0FCH 
-        MOV TL0,#018H 
-        SETB TR0 
-HERE5:  JNB TF0,HERE5
-        CLR TR0 
-        CLR TF0 
-        DJNZ R3,BACK2
-        RET   
+DELAY: MOV R3,#65 ; r3 = 65 , m = 1
+HERE2: MOV R4,#255 ;r4 = 255 , m =1
+HERE: DJNZ R4,HERE ; m = 2
+DJNZ R3,HERE2 ;m =2
+RET ;m =2
+;for here loop , 2 * 255 * 1.085 uS = 553.35 us
+;HERE 2 loop repeats HERE loop 65 times then  553.35 us * 65 = 35967.75uS
+;mov r4 is also repating 65 times  and djnz r3 too so 3 * 65 * 1.085 us = 211uS
+;for return 2 * 1.085 = 2.17uS
+;total machine cycle = 35967.75 + 211 + 2.17 = 36180.92 uS
+;time delay = 0.036 S
+ 
+;------------------------------------------
+DELAY2:	MOV R3,#250D ; R3  = 250
+        MOV TMOD,#01 ; timer 0 mode 1
+BACK2:  MOV TH0,#0FCH 
+        MOV TL0,#018H  ;initial count value = FC18 is loaded into timer
+        SETB TR0 ;starting timer
+HERE5:  JNB TF0,HERE5 ;monitor Timer flag if it is 1
+        CLR TR0 ; stop the timer
+        CLR TF0 ; reset the timer flag
+        DJNZ R3,BACK2 ; repeat this process 250 times
+        RET  
+;COUNT = 65535 - 64536 + 1 = 1000
+; 1000 * 1.085 uS = 1085 uS
+; 1085uS * 250 = 0.271 S
+;--------------------------------------------
 
 DELAY3:MOV TMOD,#10H ;Timer 1, mod 1
-MOV R3,#60 ;cnter for multiple delay
-AGAIN1: MOV TL1,#08H ;TL1=08,low byte of timer
-MOV TH1,#01H ;TH1=01,high byte
+MOV R3,#70 ; for multiple delay
+AGAIN1: MOV TL1,#00H ;TL1=08,low byte of timer
+MOV TH1,#00H ;TH1=01,high byte , TIMER = 0000
 SETB TR1 ;Start timer 1
 BACK: JNB TF1,BACK ;until timer rolls over
 CLR TR1 ;Stop the timer 1
 CLR TF1 ;clear Timer 1 flag
-DJNZ R3,AGAIN1 ;if R3 not zero then 
-;reload time
+DJNZ R3,AGAIN1 ;if R3 not zero then
+RET
+;COUNT = 65535 - 0000 + 1 = 65536
+;65536 * 1.085 uS = 71.1065mS
+;71.1065 mS * 70 = 4977.45mS = 5S
 
 ;-----------------------------------------
 CLRSCR: MOV A,#01H
@@ -280,5 +291,4 @@ TEXT_S2: DB "OPENING DOOR",0
 TEXT_S3: DB "CLOSING DOOR", 0
 ALERT_TEXT: DB "INTRUDER ALERT !",0
 ATTEMPT_TEXT: DB "ATTEMPTS LEFT:0",0
-ATTEMPT_VALUE: DB 53D,54D,55D
 END
