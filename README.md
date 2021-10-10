@@ -1,4 +1,4 @@
-# password-based-door-lock-system-using-microcontroller-ALP
+# password-based-door-lock-system-using-8051-microcontroller-ALP
 A 5 digit door lock is made which will open door only when user types correct password, when a wrong password is entered then door remains lock and number of attempts left will be displayed. If he continue to do so, after losing all the attempts a buzzer sound.
 All the programig is done using Assembly language.
 <br />1.clone this project into your system open proteus file , sometimes by default the power value will become 0 if so then change it to 5 volt, also check the supply of buzzer(2V) and stepper motor (12V)
