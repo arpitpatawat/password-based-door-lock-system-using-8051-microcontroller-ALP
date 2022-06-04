@@ -1,7 +1,7 @@
 # Password based door lock system using 8051 microcontroller
 ## About
 This project is a password based door lock system with alert system made with Assembly level programming.
-Please refer to this [document]() for project documentation.
+Please refer to this [document](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/documentation.pdf) for project documentation.
 
 # The Main objective of this porjects is –
 - Build a Secure Door Lock System.
@@ -57,7 +57,7 @@ Using windows cmd, we were able to create a virtual port.
 3. Open [proteus file](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/micro%20project.pdsprj) , sometimes by default the power value will become 0 if so then change it to 5 volt, also check the supply of buzzer(2V) and stepper motor (12V)
 4. you need to upload the [hex](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/Objects/micro%20project.hex) file in 8051 and this [hex](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/arduino/arduino.ino.hex) file to arduino in the proteus.
 5.Now setup BLYNK app, get the auth id and paste in [here](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/arduino/arduino.ino) 
-6. Download and set up COMPIM and BLYNK library using this video - [link](https://www.youtube.com/watch?v=IcEmUOmZ19c) and also see this [documentation]() for reference
+6. Download and set up COMPIM and BLYNK library using this video - [link](https://www.youtube.com/watch?v=IcEmUOmZ19c) and also see this [documentation](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/documentation.pdf) for reference
 7. Run the simulation in proteus and start the BLYNK app , and follow the procedure given in the below link 
 
 ![image](https://user-images.githubusercontent.com/75129076/171996672-993ec36b-11f1-4c26-a53d-58c54d29ed80.png)
@@ -67,5 +67,5 @@ Using windows cmd, we were able to create a virtual port.
 ![image](https://user-images.githubusercontent.com/75129076/171996730-3b73b712-d598-4b10-8288-256b24595fd0.png)
 
 
-
+## Working - 
 checkout the project at -  [Simulation link](https://drive.google.com/file/d/1znxnCfNZTRAjrPX5iGouFtq3nlnf6qwH/view?usp=sharing)
