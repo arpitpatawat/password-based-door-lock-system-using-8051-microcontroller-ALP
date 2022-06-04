@@ -1,8 +1,22 @@
 ORG 0000H
-CLR P2.7 ; port 2.7 will be used for buzzer
+MOV R6,#0D	
 MOV R5,#3D ;number of attempts
+MOV A,#0
+MOV C,ACC.4
+MOV P0.4,C
+MOV C,ACC.5
+MOV P0.5,C
+MOV C,ACC.6
+MOV P0.6,C
+MOV C,ACC.7
+MOV P0.7,C
+
 ;--------------------------------
 MAIN:
+CLR P0.0
+CLR P2.7 ; port 2.7 will be used for buzzer
+;CLR P0.0 ;the communication pin with arduino
+CLR P0.3 ; led lockdown
 ACALL LCD_INIT ; initialize LCD
 MOV DPTR,#INITIAL_MSG ;DPTR point to initial text
 ACALL SEND_DAT ;DISPLAY DPTR content on LCD
@@ -20,7 +34,7 @@ SJMP MAIN ;short jump to main
 LCD_INIT:MOV DPTR,#MYDATA
 C1:CLR A
 MOVC A,@A+DPTR
-JZ DAT
+JZ DAT ; jump if A  = 0
 ACALL COMNWRT
 ACALL  DELAY
 INC DPTR
@@ -30,7 +44,7 @@ DAT:RET
 SEND_DAT:  
 CLR A
 MOVC A,@A+DPTR
-JZ AGAIN
+JZ AGAIN ; jump if A = 0
 ACALL DATAWRT
 ACALL DELAY
 INC DPTR
@@ -56,7 +70,7 @@ RPT:CLR A ; A = 0
 MOVC A,@A+DPTR ; A = FIRST NUMBER OF THE ACTUAL PASSWORD
 XRL A,@R1 ; XOR with the actual password
 ;if both the numbers are equal then A = 0;
-JNZ FAIL ; jump to FAIL where we decide what will happen
+JNZ FAIL ; jump if a not = 0
 INC R1
 INC DPTR
 DJNZ R0,RPT ;repeat this process for 5 times
@@ -72,6 +86,19 @@ ACALL LINE2
 MOV DPTR,#TEXT_S2
 ACALL SEND_DAT ;display opening door
 ACALL DELAY2
+MOV DPTR,#500H
+MOV A,R6
+MOVC A,@A+DPTR
+MOV C,ACC.4
+MOV P0.4,C
+MOV C,ACC.5
+MOV P0.5,C
+MOV C,ACC.6
+MOV P0.6,C
+MOV C,ACC.7
+MOV P0.7,C
+INC R6
+ACALL DELAY
 CLR P2.3
 CLR P2.4 
 ;ROTATE MOTOR CLOCK WISE 90 degree TO OPEN DOOR
@@ -117,7 +144,8 @@ ACALL DELAY2
 ACALL DELAY2 ;
 RET
 ;-------------------------------
-ALERT:MOV R2,#10D
+ALERT:SETB P0.0 ;sending alert to arduino
+MOV R2,#10D
 ACALL CLRSCR
 MOV DPTR, #ALERT_TEXT ;display alert text
 ACALL SEND_DAT
@@ -128,7 +156,25 @@ CLR P2.7
 ACALL DELAY2
 DJNZ R2, BUZZ
 MOV R5,#3D
+SJMP NOTIFICATION
 LJMP MAIN
+;~~~~~~~~~~~~~~~~~~~~~~~~~~
+NOTIFICATION:JB P0.1,LOCKDOWN
+JB P0.2,RESET
+SJMP NOTIFICATION
+LOCKDOWN:SETB P0.3
+ACALL CLRSCR
+MOV DPTR,#LOCKDOWN_TEXT ;
+ACALL SEND_DAT
+ACALL DELAY2
+ACALL LINE2
+MOV DPTR,#POLICE_TEXT ;
+ACALL SEND_DAT
+ACALL DELAY2
+SJMP NOTIFICATION
+
+RESET: LJMP MAIN
+
 ;--------------------------------------------------
 ;algorithm to check for key scan
 KEY_SCAN:MOV P1,#11111111B  ;TAKE INPUT FROM PORT 1
@@ -275,6 +321,7 @@ ACALL COMNWRT
 RET
 ;----------------------------------------
 ORG 500H
+DB 10000000B,01000000B,11000000B,00100000B,10100000B,01100000B,11100000B,00010000B,00110000B
 MYDATA: DB 38H,0EH,01,06,80H,0; 
 ;initializer 5 X 7 MATRIX lcd
 ;display on cursor blinking
@@ -291,4 +338,6 @@ TEXT_S2: DB "OPENING DOOR",0
 TEXT_S3: DB "CLOSING DOOR", 0
 ALERT_TEXT: DB "INTRUDER ALERT !",0
 ATTEMPT_TEXT: DB "ATTEMPTS LEFT:0",0
+LOCKDOWN_TEXT: DB "LOCKDOWN STARTED",0
+POLICE_TEXT: DB "CALLING POLICE!",0
 END
