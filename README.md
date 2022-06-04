@@ -33,7 +33,6 @@ Please refer to this [document](https://github.com/arpitpatawat/password-based-d
 6. L293D Motor Driver
 7. Buzzer
 8. Arduino
-9. COMPIM
 
 # Software Detail -
 -	Proteus Design suite–
@@ -56,7 +55,7 @@ Using windows cmd, we were able to create a virtual port.
 2. you need to have [Proteus Software](https://www.labcenter.com/) , [Virtual Serial Port Emulator](http://www.eterlogic.com/Products.VSPE.html) and [BLYNK app](https://play.google.com/store/apps/details?id=cc.blynk&hl=en_IN&gl=US).
 3. Open [proteus file](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/micro%20project.pdsprj) , sometimes by default the power value will become 0 if so then change it to 5 volt, also check the supply of buzzer(2V) and stepper motor (12V)
 4. you need to upload the [hex](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/Objects/micro%20project.hex) file in 8051 and this [hex](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/arduino/arduino.ino.hex) file to arduino in the proteus.
-5.Now setup BLYNK app, get the auth id and paste in [here](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/arduino/arduino.ino) 
+5. Now setup BLYNK app, get the auth id and paste in [here](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/arduino/arduino.ino) 
 6. Download and set up COMPIM and BLYNK library using this video - [link](https://www.youtube.com/watch?v=IcEmUOmZ19c) and also see this [documentation](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/documentation.pdf) for reference
 7. Run the simulation in proteus and start the BLYNK app , and follow the procedure given in the below link 
 
