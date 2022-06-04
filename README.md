@@ -63,7 +63,7 @@ Using windows cmd, we were able to create a virtual port.
 ![image](https://user-images.githubusercontent.com/75129076/171996676-b01844a0-28d4-4f30-9764-5c3cc32e8c7f.png)
 ![image](https://user-images.githubusercontent.com/75129076/171996722-aabe05e9-bdc7-4713-84f0-55ff0da2362d.png)
 ![image](https://user-images.githubusercontent.com/75129076/171996749-80dba7b7-4630-4d94-a086-0f110a64d7fe.png)
-![image](https://user-images.githubusercontent.com/75129076/171996730-3b73b712-d598-4b10-8288-256b24595fd0.png)
+
 
 
 ## Working - 
