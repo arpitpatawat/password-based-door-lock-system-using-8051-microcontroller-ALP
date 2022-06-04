@@ -57,7 +57,7 @@ Using windows cmd, we were able to create a virtual port.
 4. you need to upload the [hex](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/Objects/micro%20project.hex) file in 8051 and this [hex](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/arduino/arduino.ino.hex) file to arduino in the proteus.
 5. Now setup BLYNK app, get the auth id and paste in [here](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/arduino/arduino.ino) 
 6. Download and set up COMPIM and BLYNK library using this video - [link](https://www.youtube.com/watch?v=IcEmUOmZ19c) and also see this [documentation](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/documentation.pdf) for reference
-7. Run the simulation in proteus and start the BLYNK app , and follow the procedure given in the below link 
+7. Run the simulation in proteus and start the BLYNK app , and follow the procedure given in the below simulation link 
 
 ![image](https://user-images.githubusercontent.com/75129076/171996672-993ec36b-11f1-4c26-a53d-58c54d29ed80.png)
 ![image](https://user-images.githubusercontent.com/75129076/171996676-b01844a0-28d4-4f30-9764-5c3cc32e8c7f.png)
