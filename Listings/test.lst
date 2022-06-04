@@ -1,0 +1,40 @@
+A51 MACRO ASSEMBLER  TEST                                                                 11/30/2021 10:02:39 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.5.0
+OBJECT MODULE PLACED IN .\Objects\test.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE test.asm SET(SMALL) DEBUG PRINT(.\Listings\test.lst) OBJECT(.\Objects\t
+                      est.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 000h
+
+0000 7400              2     mov a,#00h
+
+0002 759000            3     mov p1,#00h
+
+0005 F590              4     l1:mov p1,a
+
+0007 04                5     inc a
+
+0008 80FB              6     sjmp l1
+
+                       7     end
+
+A51 MACRO ASSEMBLER  TEST                                                                 11/30/2021 10:02:39 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+L1 . . . . . . . .  C ADDR   0005H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

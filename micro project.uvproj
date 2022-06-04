@@ -369,9 +369,9 @@
               <FilePath>.\STARTUP.A51</FilePath>
             </File>
             <File>
-              <FileName>project.asm</FileName>
+              <FileName>test.asm</FileName>
               <FileType>2</FileType>
-              <FilePath>.\project.asm</FilePath>
+              <FilePath>.\test.asm</FilePath>
             </File>
           </Files>
         </Group>

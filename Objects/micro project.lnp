@@ -1,4 +1,4 @@
 ".\Objects\STARTUP.obj",
-".\Objects\project.obj" 
+".\Objects\test.obj" 
 TO ".\Objects\micro project" 
 PRINT(".\Listings\micro project.m51") RAMSIZE(256) 
