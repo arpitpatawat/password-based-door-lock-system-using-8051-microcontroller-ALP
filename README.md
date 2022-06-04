@@ -1,6 +1,6 @@
 # Password based door lock system using 8051 microcontroller
 ## About
-This project is a password based door lock system with alert system made with Assembly level programming.
+This project is a password based door lock system with alert system made with Assembly level programming for 8051 Micro-controller.
 Please refer to this [document](https://github.com/arpitpatawat/password-based-door-lock-system-using-8051-microcontroller-ALP/blob/arpitp/documentation.pdf) for project documentation.
 
 # The Main objective of this porjects is –
